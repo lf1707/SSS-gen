@@ -1,1 +1,26 @@
+version: '3'
 
+services: 
+  sss:
+    image: mritd/shadowsocks
+    container_name: sss
+    ports:
+      - "${PORT1}:8388/tcp"
+    environment:
+      - SS_MODULE=ss-server
+      - SS_CONFIG=-s 0.0.0.0 -p 8388 -m ${CRYPTO1} -k ${PASSWORD1} --fast-open -v 
+    restart: always
+
+  sss-kcptun:
+    image: mritd/shadowsocks
+    container_name: sss-kcptun
+    ports:
+      - "${PORT2}:6443/tcp"
+      - "${PORT2}:6500/udp"
+    environment:
+      - SS_MODULE=ss-server
+      - SS_CONFIG=-s 0.0.0.0 -p 6443 -m ${CRYPTO2} -k ${PASSWORD2} --fast-open -v 
+      - KCP_FLAG=true
+      - KCP_MODULE=kcpserver
+      - KCP_CONFIG=-t 127.0.0.1:6443 -l :6500 -mode fast2
+    restart: always
