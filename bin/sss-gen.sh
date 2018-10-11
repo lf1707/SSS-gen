@@ -4,3 +4,11 @@
 # usage:
 #   ./sss-gen.sh {$user_id} {$date_eol}
 #
+### function
+function checkifexist()
+{
+  #stub function
+  echo "check if the file/directory exist or not"
+}
+
+### Main
